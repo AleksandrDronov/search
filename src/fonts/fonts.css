@@ -4,3 +4,16 @@
   font-weight: 400;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./roboto-medium.woff2') format('woff2');
+  font-weight: 700;
+  font-style: bold;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./roboto-light.woff2') format('woff2');
+  font-weight: 200;
+}

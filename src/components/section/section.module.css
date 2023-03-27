@@ -1,18 +1,12 @@
-.header {
+.section {
   display: flex;
-  justify-content: center;
-}
-
-.list {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 41px;
-  padding-bottom: 44px;
-  min-width: 1072px;
+  align-items: center;
+  flex-direction: column;
 }
 
 .button {
-  width: 188px;
+  margin-top: 20px;
+  width: 336px;
   height: 45px;
   border: 2px solid #009990;
   border-radius: 5px;

@@ -7,6 +7,14 @@
   font-family: 'Roboto';
   font-size: 16px;
   line-height: 19px;
+  cursor: pointer;
+  outline: none;
+  padding-left: 10px;
+}
+.select:focus {
+  background-color: #009990;
+  color: #FFFFFF;
+  border-color: #009990;
 }
 
 .option {
