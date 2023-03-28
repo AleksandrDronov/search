@@ -1,19 +1,32 @@
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 import styles from "./select.module.css";
+import { ISubjects, IAreas } from "../../App";
+import { IDistricts } from "../header/header";
 
 interface ISelect {
-  title: string,
-  name: string
+  name: string;
+  title: string;
+  subjects: ISubjects[] | IAreas[] | IDistricts[] | undefined;
+  handleChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const Select: FC<ISelect> = (props) => {
   return (
-    <select name={props.name} required className={styles.select}>
-      <option disabled selected className={styles.option}>{props.title}</option>
-      <option value="Чебурашка">Чебурашка</option>
-      <option value="Крокодил Гена">Крокодил Гена</option>
-      <option value="Шапокляк">Шапокляк</option>
-      <option value="Крыса Лариса">Крыса Лариса</option>
+    <select
+      name={props.name}
+      defaultValue={props.title}
+      required
+      className={styles.select}
+      onChange={props.handleChange}
+    >
+      <option disabled value={props.title}>
+        {props.title}
+      </option>
+      {props.subjects?.map((item) => (
+        <option value={item.cityName || item.name} key={item.id}>
+          {item.cityName || item.name}
+        </option>
+      ))}
     </select>
   );
 };
