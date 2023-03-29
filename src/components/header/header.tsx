@@ -1,55 +1,45 @@
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, FormEvent } from "react";
 import styles from "./header.module.css";
 import Select from "../select/select";
-import { ISubjects, IAreas } from "../../App";
+import { ISubjects, IAreas, IDistricts, IParamID } from "../../App";
 
-export interface IDistricts {
-  id: number;
-  name: string;
-  metroLine: object;
-  verbatimName: string;
-  type: string;
-  nameWithPrep: string;
-  metroLineColor: string;
-  cityName?: string;
-}
+
 interface IHeader {
   subjects: ISubjects[];
   areas: IAreas[];
+  districts: IDistricts[] | undefined;
+  paramId: IParamID;
+  handleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  handleClick: (e: FormEvent<HTMLFormElement>) => void;
 }
 
-const Header: FC<IHeader> = (props) => {
-  const [districts, setDistricts] = useState<IDistricts[]>();
 
-  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const { value } = e.target;
-    const city = props.areas.find(item => item.cityName === value);
-    const id = city?.id;
-    fetch(`http://api.repetit.ru/public/districts?AreaId=${id}`)
-      .then((res) => res.json())
-      .then((data) => setDistricts(data));
-  }
+const Header: FC<IHeader> = (props) => {
+
+  const disableButton = props.districts ? false : true;
 
   return (
     <header className={styles.header}>
-      <form className={styles.list}>
+      <form className={styles.list} onSubmit={props.handleClick}>
         <Select
           name="subjects"
           title="Укажите предмет"
           subjects={props.subjects}
+          handleChange={props.handleChange}
         />
         <Select 
           name="cities" 
           title="Укажите город" 
           subjects={props.areas}
-          handleChange={handleChange}
+          handleChange={props.handleChange}
         />
         <Select
           name="districts"
           title="Укажите район"
-          subjects={districts}
+          subjects={props.districts}
+          handleChange={props.handleChange}
         />
-        <button className={styles.button}>Применить фильтр</button>
+        <button className={disableButton ? styles.button_disable : styles.button} disabled={disableButton}>Применить фильтр</button>
       </form>
     </header>
   );

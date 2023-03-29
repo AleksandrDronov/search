@@ -4,15 +4,15 @@
   border: 2px solid #009990;
   border-radius: 5px;
   color: #009990;
-  font-family: 'Roboto';
   font-size: 16px;
   line-height: 19px;
   cursor: pointer;
   outline: none;
   padding-left: 10px;
+  transition: .5s;
 }
-.select:focus {
+
+.select:hover {
   background-color: #009990;
   color: #FFFFFF;
-  border-color: #009990;
 }
