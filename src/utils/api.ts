@@ -1,4 +1,4 @@
-const baseUrl = 'http://api.repetit.ru/public/';
+const baseUrl = 'https://api.repetit.ru/public/';
 
 const checkResponse = (res: Response) => {
   if (res.ok) {
