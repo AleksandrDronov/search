@@ -1,4 +1,4 @@
-import { FC, SyntheticEvent } from "react";
+import { FC } from "react";
 import Card from "../card/card";
 import styles from "./section.module.css";
 

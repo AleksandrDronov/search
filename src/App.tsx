@@ -1,4 +1,4 @@
-import { useEffect, useState, ChangeEvent, FormEvent, SyntheticEvent } from "react";
+import { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import Header from "./components/header/header";
 import Section from "./components/section/section";
 import styles from "./app.module.css";
