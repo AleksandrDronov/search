@@ -1,8 +1,8 @@
-import { useEffect, useState, ChangeEvent, FormEvent } from "react";
+import { useEffect, useState, ChangeEvent, FormEvent, SyntheticEvent } from "react";
 import Header from "./components/header/header";
 import Section from "./components/section/section";
 import styles from "./app.module.css";
-import { getSubjects, getAreas, getDistricts, getTeacherIds, getTeachers } from "./utils/api";
+import { getSubjects, getAreas, getDistricts, getTeachers, hadleClickButton } from "./utils/api";
 
 export interface ISubjects {
   id: number;
@@ -47,17 +47,14 @@ function App() {
     districts: "",
   });
   const [teachers, setTeachers] = useState();
-  const [count, setCount] = useState(3);
+  const [count, setCount] = useState(6);
   const [isLoad, setIsLoad] = useState(false);
   const [subject, setSubject] = useState<{ name: string }>();
 
 
   useEffect(() => {
-    getSubjects()
-      .then((data: ISubjects[]) => setLessons(data))
-      .catch((err) => console.log(err));
-    getAreas()
-      .then((data: IAreas[]) => setAreas(data))
+    Promise.all([getSubjects(), getAreas()])
+      .then(([subjects, cities]) => { setLessons(subjects); setAreas(cities) })
       .catch((err) => console.log(err));
   }, []);
 
@@ -71,28 +68,29 @@ function App() {
     }
   };
 
-  const handleClick = async (e: FormEvent<HTMLFormElement | HTMLButtonElement>) => {
+  const handleClick = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoad(true);
     const { subjects, cities, districts } = paramId;
-    const teacherIds = await getTeacherIds(subjects, cities, districts);
-    const threeTeacherIds = teacherIds.slice(0, count);
-
-    const filterParamsArr = Object.keys(threeTeacherIds).map(key => [key, threeTeacherIds[key]]);
-    const params = new URLSearchParams();
-    filterParamsArr.forEach((param: string[]) => (
-      params.set(`Ids[${param[0]}]`, param[1])
-    ));
-    const query = params.toString();
-
+    const query = await hadleClickButton(subjects, cities, districts, 3)
     await getTeachers(query)
       .then((data) => setTeachers(data))
       .catch((err) => console.log(err));
-
-      const subjectName = lessons?.find((item) => item.id === +subjects);
-      setSubject(subjectName)
-      setIsLoad(false);
+    const subject = lessons?.find((item) => item.id === +subjects);
+    setSubject(subject)
+    setIsLoad(false);
     };
+
+    const handleClickMore = async () => {
+      const { subjects, cities, districts } = paramId;
+      const query = await hadleClickButton(subjects, cities, districts, count)
+      await getTeachers(query)
+        .then((data) => setTeachers(data))
+        .catch((err) => console.log(err));
+      const subject = lessons?.find((item) => item.id === +subjects);
+      setCount((prev) => prev + 3);
+      setSubject(subject)
+      };
     
   if (!lessons || !areas) return null;
 
@@ -107,7 +105,7 @@ function App() {
         paramId={paramId}
       />
       {teachers ? (
-        <Section teachers={teachers} subject={subject?.name} handleClick={handleClick}/>
+        <Section teachers={teachers} subject={subject?.name} handleClickMore={handleClickMore}/>
       ) : isLoad ? (
         <p className={styles.title}>Загрузка данных...</p>
       ) : (

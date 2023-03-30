@@ -6,6 +6,7 @@
 
 .button {
   margin-top: 20px;
+  margin-bottom: 40px;
   width: 336px;
   height: 45px;
   border: 2px solid #009990;
@@ -16,4 +17,11 @@
   line-height: 19px;
   background-color: #009990;
   cursor: pointer;
+  transition: .5s;
+}
+
+.button:hover {
+  background-color: #ace4e1;
+  border: 2px solid #ace4e1;
+  color: #009990;
 }

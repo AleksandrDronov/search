@@ -1,4 +1,4 @@
-import { FC, FormEvent } from "react";
+import { FC, SyntheticEvent } from "react";
 import Card from "../card/card";
 import styles from "./section.module.css";
 
@@ -14,9 +14,8 @@ interface ITeacher {
 interface ISection {
   teachers: ITeacher[] | undefined;
   subject: string | undefined;
-  handleClick: (e: FormEvent<HTMLButtonElement>) => void;
+  handleClickMore: () => void;
 }
-
 
 const Section: FC<ISection> = (props) => {
   return (
@@ -30,7 +29,7 @@ const Section: FC<ISection> = (props) => {
           key={item.id}
         />
       ))}
-      <button className={styles.button} onClick={props.handleClick}>Загрузить еще</button>
+      <button className={styles.button} onClick={props.handleClickMore}>Загрузить еще</button>
     </section>
   );
 };

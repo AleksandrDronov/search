@@ -31,3 +31,15 @@ export const getTeachers = (query: string) => {
   return fetch(`${baseUrl}/teachers/short/?${query}`)
     .then(checkResponse)
 };
+
+export const hadleClickButton = async (subjects: string, cities: string, districts: string, count: number) => { 
+  const teacherIds = await getTeacherIds(subjects, cities, districts);
+  const threeTeacherIds = teacherIds.slice(0, count);
+
+  const filterParamsArr = Object.keys(threeTeacherIds).map(key => [key, threeTeacherIds[key]]);
+  const params = new URLSearchParams();
+  filterParamsArr.forEach((param: string[]) => (
+    params.set(`Ids[${param[0]}]`, param[1])
+  ));
+  return params.toString();
+};
