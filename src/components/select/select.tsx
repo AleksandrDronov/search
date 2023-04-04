@@ -7,7 +7,6 @@ interface ISelect {
   name: string;
   title: string;
   subjects: ISubjects[] | IAreas[] | IDistricts[] | undefined;
-  ref?: MutableRefObject<undefined>
   handleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 

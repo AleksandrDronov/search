@@ -16,7 +16,7 @@ interface IHeader {
 
 const Header: FC<IHeader> = (props) => {
 
-  const disableButton = props.districts ? false : true;
+  const disableButton = props.paramId.cities && props.paramId.subjects ? false : true;
 
   return (
     <header className={styles.header}>
