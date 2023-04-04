@@ -107,7 +107,7 @@ function App() {
       {teachers ? (
         <Section teachers={teachers} subject={subject?.name} handleClickMore={handleClickMore}/>
       ) : isLoad ? (
-        <p className={styles.title}>Загрузка данных...</p>
+        <p className={styles.title}>Загрузка данных<span>.</span><span>.</span><span>.</span></p>
       ) : (
         <p className={styles.title}>Выберите фильтры</p>
       )}
